@@ -42,7 +42,9 @@ button:hover {
 .cyan {
   background-color: rgb(0, 130, 140);
 }
-
+.light-blue {
+  background-color: cyan;
+}
 .blue {
   background-color: blue;
 }
@@ -51,6 +53,12 @@ button:hover {
 }
 .purple {
   background-color: purple;
+}
+.magenta {
+  background-color: magenta;
+}
+.pink {
+  background-color: pink;
 }
 .brown {
   background-color: rgb(165, 97, 42);

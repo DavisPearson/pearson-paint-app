@@ -2,6 +2,10 @@ const canvas = document.getElementById("myCanvas");
 canvas.width = window.innerWidth - 10;
 canvas.height = window.innerHeight - 10;
 const c = canvas.getContext("2d");
+addEventListener("resize", function () {
+  canvas.width = window.innerWidth - 10;
+  canvas.height = window.innerHeight - 10;
+});
 
 //global data types
 
@@ -13,9 +17,9 @@ let strokeColor = "black";
 const cornerDisplay = () => {
   c.beginPath();
   c.fillStyle = "blue";
-  c.fillRect(canvas.width - 110, 0, 110, 110);
+  c.fillRect(canvas.width - 210, 0, 210, 210);
   c.closePath();
-  tool(canvas.width - 55, 55);
+  tool(canvas.width - 105, 105);
 };
 const clearCornerDisplay = () => {
   c.clearRect(0, 0, 110, 110);
@@ -77,7 +81,7 @@ cornerDisplay();
 
 addEventListener("keypress", function (event) {
   //stroke size handler
-  if (width <= 100) {
+  if (width <= 200) {
     if (event.key === "+") {
       width += 5;
       particleAmount = width / 4;
@@ -106,15 +110,18 @@ addEventListener("keypress", function (event) {
 
 addEventListener("mousedown", function (event) {
   draw = true;
-  tool(event.clientX, event.clientY);
+  if (event.clientY > 110 || event.clientX > 970) {
+    tool(event.clientX, event.clientY);
+  }
   cornerDisplay();
+  console.log(event.clientX);
 });
 addEventListener("mousemove", function (event) {
-  if (draw) {
+  if (draw && (event.clientY > 110 || event.clientX > 970)) {
     tool(event.clientX, event.clientY);
   }
 });
-addEventListener("mouseup", function (event) {
+addEventListener("mouseup", function () {
   draw = false;
 });
 
@@ -152,6 +159,10 @@ let strokeCyan = () => {
   strokeColor = "rgb(0, 130, 140)";
   cornerDisplay();
 };
+let strokeLightBlue = () => {
+  strokeColor = "cyan";
+  cornerDisplay();
+};
 let strokeBlue = () => {
   strokeColor = "blue";
   cornerDisplay();
@@ -162,6 +173,14 @@ let strokeIndigo = () => {
 };
 let strokePurple = () => {
   strokeColor = "purple";
+  cornerDisplay();
+};
+let strokeMagenta = () => {
+  strokeColor = "magenta";
+  cornerDisplay();
+};
+let strokePink = () => {
+  strokeColor = "pink";
   cornerDisplay();
 };
 let strokeBrown = () => {
