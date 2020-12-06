@@ -11,24 +11,37 @@ addEventListener("resize", function () {
 
 let width = 30;
 let strokeColor = "black";
+let maxWidth = 200;
+let minWidth = 10;
 
 //corner display
 
 const cornerDisplay = () => {
   c.beginPath();
-  c.fillStyle = "blue";
-  c.fillRect(canvas.width - 210, 0, 210, 210);
+  c.fillStyle = "white";
+  c.fillRect(canvas.width - 210, 0, 215, 215);
   c.closePath();
+
+  if (tool == erase) {
+    c.beginPath();
+    c.fillStyle = "black";
+    c.fillRect(
+      canvas.width - (107 + width / 2),
+      103 - width / 2,
+      width + 5,
+      width + 5
+    );
+  }
   tool(canvas.width - 105, 105);
 };
 const clearCornerDisplay = () => {
-  c.clearRect(0, 0, 110, 110);
+  c.clearRect(canvas.width - 210, 0, 210, 210);
   c.closePath();
 };
 //spray paint
 
 let draw = false;
-let particleSize = 2;
+let particleSize = 1;
 let particleAmount = width / 4;
 
 class Particle {
@@ -37,19 +50,29 @@ class Particle {
     this.y = y;
   }
   draw() {
+    this.determineOffsets();
+    if (
+      this.xOffset + this.yOffset < 0.67 * width &&
+      this.xOffset + this.yOffset > -0.67 * width &&
+      this.xOffset - this.yOffset < 0.67 * width &&
+      this.xOffset - this.yOffset > -0.67 * width
+    ) {
+      c.beginPath();
+      c.arc(
+        this.x + this.xOffset,
+        this.y + this.yOffset,
+        particleSize,
+        Math.PI * 2,
+        0,
+        false
+      );
+      c.fillStyle = strokeColor;
+      c.fill();
+    }
+  }
+  determineOffsets() {
     this.xOffset = width * (Math.random() - 0.5);
     this.yOffset = width * (Math.random() - 0.5);
-    c.beginPath();
-    c.arc(
-      this.x + this.xOffset,
-      this.y + this.yOffset,
-      particleSize,
-      Math.PI * 2,
-      0,
-      false
-    );
-    c.fillStyle = strokeColor;
-    c.fill();
   }
 }
 
@@ -67,6 +90,16 @@ const pencilStroke = (x, y) => {
   c.fillRect(x - width / 2, y - width / 2, width, width);
 };
 
+//marker
+
+const marker = (x, y) => {
+  c.beginPath();
+  c.fillStyle = strokeColor;
+  c.arc(x, y, width / 2, 0, Math.PI * 2, false);
+  c.fill();
+  c.closePath();
+};
+
 //eraser
 
 const erase = (x, y) => {
@@ -81,13 +114,13 @@ cornerDisplay();
 
 addEventListener("keypress", function (event) {
   //stroke size handler
-  if (width <= 200) {
+  if (width <= maxWidth) {
     if (event.key === "+") {
       width += 5;
       particleAmount = width / 4;
     }
   }
-  if (width >= 0) {
+  if (width >= minWidth) {
     if (event.key === "-") {
       width -= 5;
       particleAmount = width / 4;
@@ -99,12 +132,29 @@ addEventListener("keypress", function (event) {
     tool = sprayPaint;
   } else if (event.key === "p") {
     tool = pencilStroke;
+  } else if (event.key === "m") {
+    tool = marker;
   } else if (event.key === "e") {
     tool = erase;
   }
   cornerDisplay();
   if (event.key === "c") {
     clearCornerDisplay();
+  }
+});
+
+addEventListener("wheel", function (event) {
+  if (width <= maxWidth) {
+    if (event.deltaY == -100) {
+      width += 5;
+      cornerDisplay();
+    }
+  }
+  if (width >= minWidth) {
+    if (event.deltaY == 100) {
+      width -= 5;
+      cornerDisplay();
+    }
   }
 });
 
@@ -209,6 +259,10 @@ let strokePencil = () => {
 };
 let strokeSprayPaint = () => {
   tool = sprayPaint;
+  cornerDisplay();
+};
+let strokeMarker = () => {
+  tool = marker;
   cornerDisplay();
 };
 let strokeEraser = () => {
