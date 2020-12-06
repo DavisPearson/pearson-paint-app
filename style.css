@@ -5,6 +5,9 @@
 .color-select {
   position: absolute;
 }
+canvas {
+  background-color: white;
+}
 button {
   width: 40px;
   height: 40px;
