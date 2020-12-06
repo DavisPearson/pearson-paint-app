@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" type="text/CSS" />
+  </head>
+  <body>
+    <div class="color-select">
+      <button class="red" type="button" onClick="strokeRed()"></button>
+      <button
+        class="red-orange"
+        type="button"
+        onClick="strokeRedOrange()"
+      ></button>
+      <button class="orange" type="button" onClick="strokeOrange()"></button>
+      <button
+        class="orange-yellow"
+        type="button"
+        onClick="strokeOrangeYellow()"
+      ></button>
+      <button class="yellow" type="button" onClick="strokeYellow()"></button>
+      <button class="lime" type="button" onClick="strokeLime()"></button>
+      <button class="green" type="button" onClick="strokeGreen()"></button>
+      <button class="cyan" type="button" onClick="strokeCyan()"></button>
+      <button class="blue" type="button" onClick="strokeBlue()"></button>
+      <button class="indigo" type="button" onClick="strokeIndigo()"></button>
+      <button class="purple" type="button" onClick="strokePurple()"></button>
+      <button class="brown" type="button" onClick="strokeBrown()"></button>
+      <button
+        class="light-gray"
+        type="button"
+        onClick="strokeLightGray()"
+      ></button>
+      <button class="gray" type="button" onClick="strokeGray()"></button>
+      <button
+        class="dark-gray"
+        type="button"
+        onClick="strokeDarkGray()"
+      ></button>
+      <button class="black" type="button" onClick="strokeBlack()"></button>
+      <div class="stroke-button-parent">
+        <button class="stroke-button" type="button" onClick="strokePencil()">
+          pencil
+        </button>
+        <button
+          class="stroke-button"
+          type="button"
+          onClick="strokeSprayPaint()"
+        >
+          spray
+        </button>
+        <button class="stroke-button" type="button" onClick="strokeEraser()">
+          eraser
+        </button>
+      </div>
+    </div>
+    <canvas id="myCanvas" class="myCanvas"></canvas>
+    <script src="script.js"></script>
+  </body>
+</html>
